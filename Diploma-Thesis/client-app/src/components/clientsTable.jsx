@@ -55,7 +55,6 @@ export default function ClientsTable({ update, updatedClients }) {
   }, [currentClientId]);
 
   useEffect(() => {
-    console.log("update", update);
     if (update) {
       getClients();
       updatedClients();
@@ -145,7 +144,7 @@ export default function ClientsTable({ update, updatedClients }) {
       <Dialog
         header="Upload photo"
         visible={visibleUploadPhoto}
-        style={{ width: "50vw" }}
+        style={{ width: "80vw" }}
         onHide={() => setCurrentClientId("")}
       >
         <Upload clientId={currentClientId} />

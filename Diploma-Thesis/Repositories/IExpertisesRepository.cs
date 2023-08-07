@@ -6,5 +6,6 @@ namespace Diploma_Thesis.Repositories
     {
         Task<int> AddAsync(Expertise expertise);
         IEnumerable<Expertise> GetByClientId(Guid clientId);
+        Task<int> UpdateAsync(Expertise expertise);
     }
 }

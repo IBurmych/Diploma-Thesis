@@ -25,15 +25,16 @@ export default function ClientForm({ endpoint, clientId , updateClients}) {
   };
 
   useEffect(() => {
-    axios
-      .get(`${apiGetUrl}?id=${clientId}`)
-      .then((response) => {
-        updateClient(response.data);
-        console.log(client)
-      })
-      .catch((error) => {
-        showToast(false, error.message);
-      });
+    if (clientId) {
+      axios
+        .get(`${apiGetUrl}?id=${clientId}`)
+        .then((response) => {
+          updateClient(response.data);
+        })
+        .catch((error) => {
+          showToast(false, error.message);
+        });
+    }
   }, []);
 
   const handleSubmit = () => {

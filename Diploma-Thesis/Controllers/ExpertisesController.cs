@@ -27,5 +27,32 @@ namespace Diploma_Thesis.Controllers
                 return BadRequest();
             return Ok();
         }
+        [HttpPost]
+        public async Task<IActionResult> Update(ExpertiseModel model)
+        {
+            int count = await _expertisesService.UpdateAsync(model);
+            if (count < 1)
+                return BadRequest();
+            return Ok();
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> GenerateTestVectors()
+        {
+            int count = await _expertisesService.GenerateTestVectors();
+            if (count < 1)
+                return BadRequest();
+            return Ok();
+        }
+        [HttpGet]
+        public IActionResult AnalyseAllVectors()
+        {
+
+            var res = string.Concat(
+                _expertisesService
+                    .AnalyseAllVectors()
+                    .Select((x, index) => $"{index + 1}) результат: {x.Result}, очікуваний результат: {x.ExpectedResult}\n"));
+            return Ok(res);
+        }
     }
 }

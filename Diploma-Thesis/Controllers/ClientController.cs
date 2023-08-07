@@ -1,7 +1,6 @@
 ﻿using Diploma_Thesis.Models;
 using Diploma_Thesis.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics.Metrics;
 
 namespace Diploma_Thesis.Controllers
 {

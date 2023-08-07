@@ -9,7 +9,6 @@ namespace Diploma_Thesis.Entities
         public bool Result { get; set; }
         public string Notes { get; set; }
 
-
         [ForeignKey("ClientId")]
         public Guid ClientId { get; set; }
         public virtual Client Client { get; set; }

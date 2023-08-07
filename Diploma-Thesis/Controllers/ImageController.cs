@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Diploma_Thesis.Models;
+using Diploma_Thesis.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Diploma_Thesis.Controllers
 {
@@ -6,18 +8,23 @@ namespace Diploma_Thesis.Controllers
     [Route("[controller]")]
     public class ImageController : ControllerBase
     {
-        [HttpPost]
-        public IActionResult UploadFile([FromQuery] Guid clientId)
+        private readonly IExpertisesService _expertisesService;
+        public ImageController(IExpertisesService expertisesService)
         {
-            var file = Request.Form.Files[0]; 
+            _expertisesService = expertisesService;
+        }
+        [HttpPost]
+        public async Task<IActionResult> UploadFile([FromQuery] Guid clientId)
+        {
+            var file = Request.Form.Files[0];
+            ExpertiseModel? expertise = null;
 
             if (file != null && file.Length > 0)
             {
-                var fileName = file.FileName;
-                var fileSize = file.Length;
+                expertise = await _expertisesService.AnalyzePhoto(file, clientId);
             }
 
-            return Ok(true);
+            return Ok(expertise);
         }
     }
 }

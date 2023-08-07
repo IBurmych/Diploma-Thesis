@@ -15,11 +15,9 @@ function App() {
   const [update, setUpdate] = useState(false);
 
   const updateClients = useCallback(() => {
-    console.log("updateClients", update);
     setUpdate(true);
   }, []);
   const updatedClients = useCallback(() => {
-    console.log("updatedClients");
     setUpdate(false);
   }, []);
 

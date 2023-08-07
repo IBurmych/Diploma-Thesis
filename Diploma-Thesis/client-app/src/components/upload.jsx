@@ -1,16 +1,36 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect, useReducer } from "react";
+import axios from "axios";
 import { Toast } from "primereact/toast";
 import { FileUpload } from "primereact/fileupload";
 import { ProgressBar } from "primereact/progressbar";
 import { Button } from "primereact/button";
 import { Tooltip } from "primereact/tooltip";
 import { Tag } from "primereact/tag";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { InputText } from "primereact/inputtext";
 
 export default function Upload({ clientId }) {
   const toast = useRef(null);
   const [totalSize, setTotalSize] = useState(0);
+  const baseExpertise = {
+    id: "",
+    date: "",
+    result: "",
+    notes: "",
+    clientId: "",
+  };
+
+  const [expertise, updateExpertise] = useReducer(
+    (state, updates) => ({ ...state, ...updates }),
+    baseExpertise
+  );
   const fileUploadRef = useRef(null);
   const apiUrl = process.env.REACT_APP_API_URL + "Image/";
+  const updateUrl = process.env.REACT_APP_API_URL + "Expertises/Update";
+
+  useEffect(() => {
+  }, [expertise]);
 
   const onTemplateSelect = (e) => {
     let _totalSize = totalSize;
@@ -31,11 +51,31 @@ export default function Upload({ clientId }) {
     });
 
     setTotalSize(_totalSize);
+    updateExpertise(JSON.parse(event.xhr.response));
     toast.current.show({
       severity: "info",
       summary: "Success",
       detail: "File Uploaded",
     });
+  };
+
+  const handleSubmitUpdate = () => {
+    axios
+      .post(updateUrl, expertise)
+      .then((response) => {
+        toast.current.show({
+          severity: "success",
+          summary: "Success",
+          detail: "Notes updated",
+        });
+      })
+      .catch((error) => {
+        toast.current.show({
+          severity: "error",
+          summary: "Success",
+          detail: "Notes not updated",
+        });
+      });
   };
 
   const onTemplateRemove = (file, callback) => {
@@ -45,10 +85,6 @@ export default function Upload({ clientId }) {
 
   const onTemplateClear = () => {
     setTotalSize(0);
-  };
-
-  const uploadHandler = (event) => {
-    console.log("uploadHandler", event);
   };
 
   const headerTemplate = (options) => {
@@ -153,8 +189,38 @@ export default function Upload({ clientId }) {
       "custom-cancel-btn p-button-danger p-button-rounded p-button-outlined",
   };
 
+  const notesBodyTemplate = () => {
+    return (
+      <InputText
+        value={expertise.notes}
+        onChange={(e) => updateExpertise({ notes: e.target.value })}
+      />
+    );
+  };
+  const notesSaveButtonTemplate = () => {
+    return (
+      <Button
+        label="Update"
+        type="submit"
+        icon="pi pi-check"
+        severity="success"
+        onClick={handleSubmitUpdate}
+      />
+    );
+  };
+
   return (
     <div>
+      {expertise.id != "" && (
+        <div className="expertise-wrap">
+          <DataTable value={[expertise]} tableStyle={{ minWidth: "50rem" }}>
+            <Column field="date" header="Date" />
+            <Column field="result" header="Result" />
+            <Column header="Notes" body={notesBodyTemplate} />
+            <Column header="Update" body={notesSaveButtonTemplate} />
+          </DataTable>
+        </div>
+      )}
       <Toast ref={toast}></Toast>
       <Tooltip target=".custom-choose-btn" content="Choose" position="bottom" />
       <Tooltip target=".custom-upload-btn" content="Upload" position="bottom" />
@@ -177,7 +243,6 @@ export default function Upload({ clientId }) {
         chooseOptions={chooseOptions}
         uploadOptions={uploadOptions}
         cancelOptions={cancelOptions}
-        uploadHandler={uploadHandler}
       />
     </div>
   );
