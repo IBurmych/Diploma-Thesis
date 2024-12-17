@@ -8,6 +8,7 @@ import { Button } from "primereact/button";
 import ClientForm from "./clientForm";
 import Upload from "./upload";
 import ExpertisesTable from "./expertisesTable";
+import InitialParameters from "./InitialParameters";
 
 export default function ClientsTable({ update, updatedClients }) {
   const apiUrl = `${process.env.REACT_APP_API_URL}Client/GetAll`;
@@ -142,12 +143,12 @@ export default function ClientsTable({ update, updatedClients }) {
         />
       </Dialog>
       <Dialog
-        header="Upload photo"
         visible={visibleUploadPhoto}
         style={{ width: "80vw" }}
         onHide={() => setCurrentClientId("")}
       >
-        <Upload clientId={currentClientId} />
+        <InitialParameters toast={errorToast}/>
+        {/* <Upload clientId={currentClientId} /> */}
       </Dialog>
       <Dialog
         header="Expertises"

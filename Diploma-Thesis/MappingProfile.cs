@@ -11,6 +11,7 @@ namespace Diploma_Thesis
             CreateMap<Client, ClientDetailedModel>().ReverseMap();
             CreateMap<Client, ClientSimpleModel>().ReverseMap();
             CreateMap<Expertise, ExpertiseModel>().ReverseMap();
+            CreateMap<Diapason, FullDiapasonModel>().ReverseMap();
         }
     }
 }

@@ -211,7 +211,7 @@ export default function Upload({ clientId }) {
 
   return (
     <div>
-      {expertise.id != "" && (
+      {expertise.id !== "" && (
         <div className="expertise-wrap">
           <DataTable value={[expertise]} tableStyle={{ minWidth: "50rem" }}>
             <Column field="date" header="Date" />

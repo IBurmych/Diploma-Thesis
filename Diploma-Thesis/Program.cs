@@ -25,6 +25,8 @@ builder.Services.AddScoped<IClientsService, ClientsService>();
 builder.Services.AddScoped<IExpertisesRepository, ExpertisesRepository>();
 builder.Services.AddScoped<IExpertisesService, ExpertisesService>();
 builder.Services.AddScoped<IVectorsRepository, VectorsRepository>();
+builder.Services.AddScoped<IDiapasonService, DiapasonService>();
+builder.Services.AddScoped<IDiapasonsRepository, DiapasonsRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddMvc().AddXmlSerializerFormatters();
