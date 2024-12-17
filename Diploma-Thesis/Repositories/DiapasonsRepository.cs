@@ -31,15 +31,5 @@ namespace Diploma_Thesis.Repositories
             _db.Diapasons.UpdateRange(diapasons);
             return await _db.SaveChangesAsync();
         }
-
-        //public IEnumerable<Expertise> GetByClientId(Guid clientId)
-        //{
-        //    return _db.Expertises.Where(x => x.ClientId == clientId);
-        //}
-        //public async Task<int> UpdateAsync(Expertise expertise)
-        //{
-        //    _db.Expertises.Update(expertise);
-        //    return await _db.SaveChangesAsync();
-        //}
     }
 }
